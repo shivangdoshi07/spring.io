@@ -21,7 +21,6 @@ INDEX VERSION 1.127+/Users/shivang/Projects/workspace/spring/.metadata/.plugins/
 3683318637.index
 3394810216.index
 3792246859.index
-3406656432.index
 1870734308.index
 2371827956.index
 2971642030.index
