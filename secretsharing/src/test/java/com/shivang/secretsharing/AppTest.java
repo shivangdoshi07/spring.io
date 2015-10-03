@@ -60,13 +60,15 @@ public class AppTest extends TestCase {
 	/**
 	 * Rigourous Test :-)
 	 */
-	
+	/*Bob cannot read Alice’s secret, which has not been shared with Bob*/
 	public void testA(){
 		try{
 			ssc.readSecret("Bob", iAlice);
 		} catch (Exception e){
 			assertTrue(true); // exception is expected
+			return;
 		}
+		assertTrue(false);
 	}
 	
 	/* Alice shares a secret with Bob, and Bob can read it */
@@ -76,7 +78,9 @@ public class AppTest extends TestCase {
 			ssc.readSecret("Bob", iAlice);
 		} catch (Exception e){
 			assertTrue(false);
+			return;
 		}
+		assertTrue(true);
 	}
 	
 	/* Alice shares a secret with Bob, and Bob shares Alice’s it with Carl, and Carl can read this secret */
@@ -87,17 +91,21 @@ public class AppTest extends TestCase {
 			ssc.readSecret("Carl", iAlice);
 		} catch (Exception e){
 			assertTrue(false);
+			return;
 		}
+		assertTrue(true);
 	}
 	
 	/* Alice shares her secret with Bob; Bob shares Carl’s secret with Alice and encounters UnauthorizedException. */
 	public void testD(){
 		try{
 			ssc.shareSecret("Alice", iAlice, "Bob");
-			ssc.shareSecret("Bob", iAlice, "Alice");
+			ssc.shareSecret("Bob", iCarl, "Alice");
 		} catch (UnauthorizedException e){
 			assertTrue(true); // exception is expected
+			return;
 		}
+		assertTrue(false);
 	}
 	
 	/* Alice shares a secret with Bob, Bob shares it with Carl, Alice unshares it with Carl, and Carl cannot read this secret anymore. */
@@ -109,7 +117,9 @@ public class AppTest extends TestCase {
 			ssc.readSecret("Carl", iAlice);
 		} catch (Exception e){
 			assertTrue(true); // exception is expected
+			return;
 		}
+		assertTrue(false);
 	}
 	
 	/* Alice shares a secret with Bob and Carl; Carl shares it with Bob, then Alice unshares it with Bob; Bob cannot read this secret anymore */
@@ -122,7 +132,9 @@ public class AppTest extends TestCase {
 			ssc.readSecret("Bob", iAlice);
 		} catch (Exception e){
 			assertTrue(true); // exception is expected
+			return;
 		}
+		assertTrue(false);
 	}
 	
 	/* Alice shares a secret with Bob; Bob shares it with Carl, and then unshares it with Carl. Carl can still read this secret.*/
@@ -135,7 +147,9 @@ public class AppTest extends TestCase {
 			ssc.readSecret("Carl", iAlice);
 		} catch (Exception e){
 			assertTrue(false);
+			return;
 		}
+		assertTrue(true);
 	}
 	
 	/*Alice shares a secret with Bob; Carl unshares it with Bob, and encounters UnauthorizedException*/
@@ -145,7 +159,9 @@ public class AppTest extends TestCase {
 			ssc.unshareSecret("Carl", iAlice, "Bob");
 		} catch (Exception e){
 			assertTrue(true); //exception expected
+			return;
 		}
+		assertTrue(false);
 	}
 	
 	/*Alice shares a secret with Bob; Bob shares it with Carl; Alice unshares it with Bob; Bob shares it with Carl with again, and encounters UnauthorizedException.*/
@@ -157,7 +173,9 @@ public class AppTest extends TestCase {
 			ssc.shareSecret("Bob", iAlice, "Carl");
 		} catch (Exception e){
 			assertTrue(true); //exception expected
+			return;
 		}
+		assertTrue(false);
 	}
 	
 	/*Alice stores the same secrete object twice, and get two different UUIDs.*/

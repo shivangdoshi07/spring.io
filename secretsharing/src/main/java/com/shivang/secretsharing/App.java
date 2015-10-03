@@ -21,19 +21,6 @@ public class App
 				new String[] { "beans.xml" });
 
         SecretService ssc = (SecretService) appContext.getBean("secretservice");
-        Secret aliceS = new Secret();
-        Secret bobS = new Secret();
-        Secret carlS = new Secret();
-        
-        UUID iAlice = ssc.storeSecret("Alice", aliceS);
-        
-        ssc.shareSecret("Alice", iAlice, "Bob");
-		ssc.shareSecret("Bob", iAlice, "Carl");
 
-		ssc.unshareSecret("Bob", iAlice, "Carl");
-		ssc.readSecret("Carl", iAlice);
-        
-        
-        
     }
 }
