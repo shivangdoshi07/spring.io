@@ -1,0 +1,11 @@
+package com.shivang.secretsharing.pojo;
+
+public class Secret {
+	
+	private static int id = 0;
+	
+	public int getNewSecret(){
+		return id;
+	}
+	
+}

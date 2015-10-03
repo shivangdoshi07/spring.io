@@ -1,0 +1,39 @@
+package com.shivang.secretsharing;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.shivang.secretsharing.Interfaces.SecretService;
+import com.shivang.secretsharing.pojo.Secret;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args )
+    {
+        System.out.println( "Hello World!" );
+        
+        ApplicationContext appContext = new ClassPathXmlApplicationContext(
+				new String[] { "beans.xml" });
+
+        SecretService ssc = (SecretService) appContext.getBean("secretserviceProxy");
+        Secret aliceS = new Secret();
+        Secret bobS = new Secret();
+        Secret carlS = new Secret();
+        
+        ssc.storeSecret("Alice", aliceS);
+        ssc.storeSecret("Bob", bobS);
+        ssc.storeSecret("Carl", carlS);
+        
+        ssc.readSecret("Alice", aliceS.getId());
+        ssc.shareSecret("Alice", bobS.getId(), "Carl");
+        ssc.shareSecret("Bob", bobS.getId(), "Alice");
+        ssc.readSecret("Alice", bobS.getId());
+        
+        
+        
+    }
+}

@@ -1,0 +1,10 @@
+package com.shivang.secretsharing.pojo;
+
+public class Secret {
+	int id = 0;
+	
+	public Secret(int id){
+		this.id = id;
+	}
+	
+}

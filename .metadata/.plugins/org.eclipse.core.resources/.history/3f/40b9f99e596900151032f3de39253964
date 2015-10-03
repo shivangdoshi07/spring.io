@@ -1,0 +1,11 @@
+package com.shivang.secretsharing.pojo;
+
+import java.util.ArrayList;
+
+public class User {
+	String name;
+	ArrayList<Secret> ownSecrets = new ArrayList<Secret>();
+	ArrayList<Secret> receivedSecrets = new ArrayList<Secret>();
+	
+	
+}

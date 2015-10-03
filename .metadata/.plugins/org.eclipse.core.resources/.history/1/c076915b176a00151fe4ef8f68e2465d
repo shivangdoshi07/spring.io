@@ -1,0 +1,21 @@
+package com.shivang.secretsharing.Advices;
+
+import java.lang.reflect.Method;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+
+@Aspect
+public class ALogging {
+
+	@Before("execution(public * *(..))")
+	public void logBefore(JoinPoint joinPoint) {
+		Method method = joinPoint.getArgs()
+		Object[] arg[] = joinPoint.getArgs();
+		System.out.println("logBefore() is running!");
+		System.out.println("hijacked : " + joinPoint.getSignature().getName());
+		System.out.println("******");
+	}
+
+}

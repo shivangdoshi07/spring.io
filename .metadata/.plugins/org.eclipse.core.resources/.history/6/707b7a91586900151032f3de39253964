@@ -1,0 +1,5 @@
+package com.shivang.secretsharing.Interfaces;
+
+public class SecretService {
+
+}

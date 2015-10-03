@@ -1,0 +1,74 @@
+package com.shivang.secretsharing.Advices;
+
+import java.lang.reflect.Method;
+import java.util.Map;
+import java.util.UUID;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+
+import com.shivang.secretsharing.SecretServiceClass;
+import com.shivang.secretsharing.Exceptions.UnauthorizedException;
+import com.shivang.secretsharing.pojo.User;
+
+@Aspect
+public class ALogging {
+	
+	private Map<String, User> usersDB;
+	
+	@Before("execution(* com.shivang.secretsharing.SecretServiceClass.readSecret(..))")
+	public void readSecret(JoinPoint joinPoint) {
+		
+		Object[] arg1 = joinPoint.getArgs();
+		SecretServiceClass ssc = (SecretServiceClass) joinPoint.getTarget();
+		usersDB = ssc.getUsersDB();
+		
+			UUID key = (UUID)arg1[1];
+			System.out.println(arg1[0] +" reads the secret of ID "+key);
+			if(!isAuth(arg1[0], key)){
+				throw new UnauthorizedException(arg1[0].toString());
+			}
+	}
+	
+	@Before("execution(* com.shivang.secretsharing.SecretServiceClass.readSecret(..))")
+	public void readSecret(JoinPoint joinPoint) {
+		String methodName = joinPoint.getSignature().getName();
+		Object[] arg1 = joinPoint.getArgs();
+		SecretServiceClass ssc = (SecretServiceClass) joinPoint.getTarget();
+		usersDB = ssc.getUsersDB();
+		
+		if(methodName.equals("readSecret")){
+			UUID key = (UUID)arg1[1];
+			System.out.println(arg1[0] +" reads the secret of ID "+key);
+			if(!isAuth(arg1[0], key)){
+				throw new UnauthorizedException(arg1[0].toString());
+			}
+		}
+		if(methodName.equals("shareSecret")){
+			UUID key = (UUID)arg1[1];
+			System.out.println(arg1[0] +" shares the secret of ID "+key+" with "+ arg1[2]);
+			if(!isAuth(arg1[0], key)){
+				throw new UnauthorizedException(arg1[0].toString());
+			}
+		}
+		if(methodName.equals("unshareSecret")){
+			System.out.println(arg1[0] +" unshares the secret of ID "+arg1[1]+" with "+ arg1[2]);
+			UUID key = (UUID)arg1[1];
+			if(!isAuth (arg1[0], key)){
+				throw new UnauthorizedException(arg1[0].toString());
+			}
+		}
+	}
+	
+	/*
+	 * Checks if User can access Secret
+	 */
+	boolean isAuth(Object userID, UUID secretID){
+		if(!usersDB.get(userID).getOwnSecrets().containsKey(secretID) && !usersDB.get(userID).getReceivedSecrets().containsKey(secretID)){
+			return false;
+		}
+		return true;
+	}
+
+}

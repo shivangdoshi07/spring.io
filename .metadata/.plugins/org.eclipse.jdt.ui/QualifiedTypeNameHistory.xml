@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.awt.List"/>
+<fullyQualifiedTypeName name="com.shivang.helloworld.Greeter"/>
+<fullyQualifiedTypeName name="java.awt.font.ShapeGraphicAttribute"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="com.shivang.secretsharing.Interfaces.SecretService"/>
+<fullyQualifiedTypeName name="com.shivang.secretsharing.SecretServiceClass"/>
+<fullyQualifiedTypeName name="org.springframework.context.ApplicationContext"/>
+<fullyQualifiedTypeName name="com.shivang.secretsharing.pojo.Secret"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.access.BeanFactoryLocator"/>
+<fullyQualifiedTypeName name="java.lang.RuntimeException"/>
+<fullyQualifiedTypeName name="org.springframework.aop.AfterReturningAdvice"/>
+<fullyQualifiedTypeName name="com.shivang.secretsharing.Exceptions.UnauthorizedException"/>
+</qualifiedTypeNameHistroy>

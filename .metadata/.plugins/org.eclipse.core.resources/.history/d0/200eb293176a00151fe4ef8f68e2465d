@@ -1,0 +1,24 @@
+package com.shivang.secretsharing.Advices;
+
+import java.lang.reflect.Method;
+import java.util.Map;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+
+import com.shivang.secretsharing.pojo.User;
+
+@Aspect
+public class ALogging {
+	
+	private Map<String, User> usersDB;
+	
+	@Before("execution(public * *(..))")
+	public void logBefore(JoinPoint joinPoint) {
+		String methodName = joinPoint.getSignature().getName();
+		Object[] arg = joinPoint.getArgs();
+		
+	}
+
+}

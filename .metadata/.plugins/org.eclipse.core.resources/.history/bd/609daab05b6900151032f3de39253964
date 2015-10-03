@@ -1,0 +1,29 @@
+package com.shivang.secretsharing.pojo;
+
+import java.util.ArrayList;
+
+public class User {
+	String name;
+	ArrayList<Secret> ownSecrets = new ArrayList<Secret>();
+	ArrayList<Secret> receivedSecrets = new ArrayList<Secret>();
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public ArrayList<Secret> getOwnSecrets() {
+		return ownSecrets;
+	}
+	public ArrayList<Secret> getReceivedSecrets() {
+		return receivedSecrets;
+	}
+	
+	public boolean checkSecrets(Secret id){
+		if(ownSecrets.contains(id) || receivedSecrets.contains(id))
+			return true;
+		else
+			return false;
+	}
+}

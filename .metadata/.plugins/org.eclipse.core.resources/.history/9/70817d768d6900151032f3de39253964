@@ -1,0 +1,35 @@
+package com.shivang.secretsharing.Advices;
+
+import java.lang.reflect.Method;
+import java.util.Map;
+
+import org.springframework.aop.MethodBeforeAdvice;
+
+import com.shivang.secretsharing.SecretServiceClass;
+import com.shivang.secretsharing.pojo.Secret;
+import com.shivang.secretsharing.pojo.User;
+
+public class HijackBefore implements MethodBeforeAdvice {
+	
+	private Map<String, User> usersDB;
+	
+	public void before(Method method, Object[] arg1, Object target) throws Throwable {
+		String methodName = method.getName();
+		SecretServiceClass ssc = (SecretServiceClass) target;
+		usersDB = ssc.getUsersDB();
+		
+		if(methodName.equals("storeSecret")){
+			System.out.println(arg1[0] +" creates a secrete with ID "+((Secret)arg1[1]).getId());
+		}
+		if(methodName.equals("readSecret")){
+			System.out.println(arg1[0] +" reads the secret of ID "+arg1[1]);
+			
+		}
+		if(methodName.equals("shareSecret")){
+			System.out.println(arg1[0] +" shares the secret of ID "+arg1[1]+" with "+ arg1[2]);
+		}
+		if(methodName.equals("unshareSecret")){
+			System.out.println(arg1[0] +" unshares the secret of ID "+arg1[1]+" with "+ arg1[2]);
+		}	
+	}
+}

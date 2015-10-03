@@ -1,0 +1,5 @@
+package com.shivang.secretsharing.pojo;
+
+public class Secret {
+
+}

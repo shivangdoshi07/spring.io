@@ -1,0 +1,44 @@
+package com.shivang.secretsharing.Advices;
+
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.UUID;
+
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
+import org.springframework.cglib.proxy.MethodProxy;
+
+import com.shivang.secretsharing.Exceptions.UnauthorizedException;
+
+public class HijackAround implements MethodInterceptor {
+
+	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
+
+		String methodName = methodInvocation.getMethod().getName();
+		Object arg1[] = methodInvocation.getArguments();
+
+		if (methodName.equals("unshareSecret")) {
+			System.out.println(arg1[0] + " unshares the secret of ID " + arg1[1] + " with " + arg1[2]);
+			UUID key = (UUID) arg1[1];
+			if (isAuthUnshare(arg1[0], key)) {
+				// proceed to original method call
+				return methodInvocation.proceed();
+			}
+		}
+	}
+
+	public Object intercept(Object arg0, Method arg1, Object[] arg2, MethodProxy arg3) throws Throwable {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * Checks if User can unshare Secret
+	 */
+	boolean isAuthUnshare(Object userID, UUID secretID) {
+		if (!usersDB.get(userID).getOwnSecrets().containsKey(secretID)) {
+			return false;
+		}
+		return true;
+	}
+}

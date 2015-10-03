@@ -1,0 +1,12 @@
+package com.shivang.secretsharing.pojo;
+
+import java.util.UUID;
+
+public class Secret {
+	UUID id;
+	
+	public Secret(int id){
+		this.id = id;
+	}
+	
+}

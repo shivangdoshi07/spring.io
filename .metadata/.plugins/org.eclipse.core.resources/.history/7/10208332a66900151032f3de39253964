@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	
+	<bean id="userAlice" class="com.shivang.secretsharing.pojo.User">
+		<constructor-arg value="Alice"/>
+	</bean>
+	
+	<bean id="userBob" class="com.shivang.secretsharing.pojo.User">
+		<constructor-arg value="Bob"/>
+	</bean>
+	
+	<bean id="userCarl" class="com.shivang.secretsharing.pojo.User">
+		<constructor-arg value="Carl"/>
+	</bean>
+	
+	<bean id="secretservice" class = "com.shivang.secretsharing.SecretServiceClass">
+		
+		<property name="usersDB">
+			<map>
+				<entry key="Alice" value-ref="userAlice" />
+				<entry key="Bob" value-ref="userBob" />
+				<entry key="Carl" value-ref="userCarl" />
+			</map>
+		</property>
+		
+	</bean>
+	
+	<bean id="hijackBeforeBean" class="com.shivang.secretsharing.Advices.HijackBefore" />
+
+	<bean id="secretserviceProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="secretservice" />
+		<property name="interceptorNames">
+			<list>
+				<value>hijackBeforeBean</value>
+			</list>
+		</property>
+	</bean>
+
+</beans>
