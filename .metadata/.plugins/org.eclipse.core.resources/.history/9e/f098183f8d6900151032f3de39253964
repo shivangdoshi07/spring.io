@@ -1,5 +1,0 @@
-package com.shivang.secretsharing.Exceptions;
-
-public class UnauthorizedException extends RuntimeException {
-
-}
