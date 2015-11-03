@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+
 @Entity
 @Table(name="Organization")
 public class Organization {
@@ -31,6 +33,7 @@ public class Organization {
 		@AttributeOverride(name="state", column = @Column(name = "state")),
 		@AttributeOverride(name="zip", column = @Column(name = "zip"))
 		})
+	@JsonUnwrapped
 	private Address address;
     
 	public Organization(){
@@ -77,6 +80,6 @@ public class Organization {
 	}
 	@Override
 	public String toString(){
-		 return new StringBuffer("{organization_id : ").append(this.organization_id).append("; name : ").append(this.name).append("; description : ").append(this.description).append("; address : ").append(this.address).append("}").toString();
+		 return new StringBuffer("organization_id : ").append(this.organization_id).append(", name : ").append(this.name).append(", description : ").append(this.description).append(", address : ").append(this.address).toString();
 	}
 }

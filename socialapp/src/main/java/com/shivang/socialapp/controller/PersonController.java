@@ -1,6 +1,8 @@
 package com.shivang.socialapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,22 +15,43 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.shivang.socialapp.model.Address;
 import com.shivang.socialapp.model.Organization;
 import com.shivang.socialapp.model.Person;
+import com.shivang.socialapp.service.OrganizationService;
+import com.shivang.socialapp.service.PersonService;
 
 
 @Controller
 @RequestMapping("/person")
 public class PersonController {
 	
-	/*@Autowired
-	Person person;*/
+	@Autowired
+	PersonService personService;
+	
+	@Autowired
+	OrganizationService organizationService;
 
 	@RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public Person create(@ModelAttribute Person person, @ModelAttribute Address address, @ModelAttribute Organization organization){
+    public ResponseEntity<Person> addUser(@ModelAttribute Person person, @ModelAttribute Address address, @ModelAttribute Organization organization){
 		
-		System.out.println("Hiii");
-		System.out.println(person.toString()+","+address.toString()+","+organization.toString());
-	    return null;		
+		if(person.getFirstname()==null || person.getLastname()==null || person.getEmail()==null){
+			person=null;
+			return new ResponseEntity<Person>(person, HttpStatus.BAD_REQUEST);
+		}
+		
+		if(address!=null)
+			person.setAddress(address);
+		
+		if(organization!=null){
+			organization = organizationService.read(organization.getOrganization_id());
+			if(organization==null){
+				person=null;
+				return new ResponseEntity<Person>(person, HttpStatus.BAD_REQUEST);
+			}else
+				person.setOrg(organization);
+		}
+		
+		person = personService.create(person);
+		return new ResponseEntity<Person>(person, HttpStatus.OK);				
     }
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

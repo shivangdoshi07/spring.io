@@ -19,6 +19,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+
 @Entity
 @Table(name="Person", uniqueConstraints = { @UniqueConstraint(columnNames = {
         "email"}) })
@@ -54,6 +56,7 @@ public class Person implements Serializable{
 		@AttributeOverride(name="state", column = @Column(name = "state")),
 		@AttributeOverride(name="zip", column = @Column(name = "zip"))
 		})
+    @JsonUnwrapped
 	private Address address;
     
     @ManyToOne
@@ -127,7 +130,7 @@ public class Person implements Serializable{
 	}
 	@Override
 	public String toString(){
-		 return new StringBuffer("{firstname : ").append(this.firstname).append("; lastname : ").append(this.lastname).append("; email : ").append(this.email).append("; description : ").append(this.description).append("; address : ").append(this.address).append("; org : ").append(this.org).append("}").toString();
+		 return new StringBuffer("{firstname : ").append(this.firstname).append(", lastname : ").append(this.lastname).append(", email : ").append(this.email).append(", description : ").append(this.description).append(", address : ").append(this.address.toString()).append(", org : ").append(this.org.toString()).append("}").toString();
 	}
     
 }
