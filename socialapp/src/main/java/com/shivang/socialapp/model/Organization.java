@@ -16,7 +16,7 @@ public class Organization {
 	@Id
     @GeneratedValue
     @Column(name="org_id")
-    private long id;
+    private long organization_id;
 	
 	@Column(name="org_name")
     private String name;
@@ -42,12 +42,21 @@ public class Organization {
 		this.description = description;
 	}
 	
-	public long getId() {
-		return id;
+	
+	/**
+	 * @return the organization_id
+	 */
+	public long getOrganization_id() {
+		return organization_id;
 	}
-	public void setId(long id) {
-		this.id = id;
+
+	/**
+	 * @param organization_id the organization_id to set
+	 */
+	public void setOrganization_id(long organization_id) {
+		this.organization_id = organization_id;
 	}
+
 	public String getName() {
 		return name;
 	}
@@ -65,5 +74,9 @@ public class Organization {
 	}
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+	@Override
+	public String toString(){
+		 return new StringBuffer("{organization_id : ").append(this.organization_id).append("; name : ").append(this.name).append("; description : ").append(this.description).append("; address : ").append(this.address).append("}").toString();
 	}
 }

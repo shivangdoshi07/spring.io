@@ -44,5 +44,10 @@ public class Address {
 	public void setZip(String zip) {
 		this.zip = zip;
 	}
+	
+	@Override
+	public String toString(){
+		 return new StringBuffer("{street : ").append(this.street).append("; city : ").append(this.city).append("; state : ").append(this.state).append("; zip : ").append(this.zip).append("}").toString();
+	}
 
 }

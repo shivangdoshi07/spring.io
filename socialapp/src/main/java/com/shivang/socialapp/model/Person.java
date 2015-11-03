@@ -125,5 +125,9 @@ public class Person implements Serializable{
 	public void setFriends(List<Person> friends) {
 		this.friends = friends;
 	}
+	@Override
+	public String toString(){
+		 return new StringBuffer("{firstname : ").append(this.firstname).append("; lastname : ").append(this.lastname).append("; email : ").append(this.email).append("; description : ").append(this.description).append("; address : ").append(this.address).append("; org : ").append(this.org).append("}").toString();
+	}
     
 }

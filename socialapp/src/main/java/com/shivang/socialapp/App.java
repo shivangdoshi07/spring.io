@@ -22,7 +22,7 @@ public class App
         Session session = sf.openSession();
         session.beginTransaction();
         
-        Organization o = new Organization("Almedus Solutions", "Startup");
+       /* Organization o = new Organization("Almedus Solutions", "Startup");
         Address a = new Address("190 Ryland Street", "San Jose", "CA", "95110");
         o.setAddress(a);
         
@@ -42,7 +42,7 @@ public class App
         
         session.save(p1);
         session.save(o);
-        session.save(p);
+        session.save(p);*/
         
         
         List<Person> employees = session.createQuery("from Person").list();
