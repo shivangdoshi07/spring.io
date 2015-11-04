@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,10 +27,17 @@ public class PersonController {
 	
 	@Autowired
 	OrganizationService organizationService;
-
+	
+	/**
+	 POST request to add an person
+	 * @param person
+	 * @param address
+	 * @param organization
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<Person> addUser(@ModelAttribute Person person, @ModelAttribute Address address, @ModelAttribute Organization organization){
+    public ResponseEntity<Person> addPerson(@ModelAttribute Person person, @ModelAttribute Address address, @ModelAttribute Organization organization){
 		
 		if(person.getFirstname()==null || person.getLastname()==null || person.getEmail()==null){
 			person=null;
@@ -54,25 +60,74 @@ public class PersonController {
 		return new ResponseEntity<Person>(person, HttpStatus.OK);				
     }
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	/**
+	 GET request to get a specific person by id
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value="{id}", method=RequestMethod.GET)
 	@ResponseBody
-	public Person getPerson(@PathVariable long id){
+	public ResponseEntity<Person> getPerson(@PathVariable("id") long id, @RequestParam(required=false) String format){
 		
-		System.out.println("Hiii");
-		return null;
+		Person person = personService.read(id);
+		if(person==null)
+			return new ResponseEntity<Person>(person, HttpStatus.NOT_FOUND);
+		else
+			return new ResponseEntity<Person>(person, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+	/**
+	 POST request to update an existing person
+	 * @param id
+	 * @param person
+	 * @param address
+	 * @param organization
+	 * @return
+	 */
+	@RequestMapping(value = "{id}", method = RequestMethod.POST)
 	@ResponseBody
-	public Person updatePerson(@PathVariable long id, @ModelAttribute Person person){
+	public ResponseEntity<Person> updatePerson(@PathVariable long id, @ModelAttribute Person person, @ModelAttribute Address address, @ModelAttribute Organization organization){
 
-		return null;
-	}
+		person.setId(id);
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	@ResponseBody
-	public Person deletePerson(@PathVariable long id){
+		if(person.getFirstname()==null || person.getLastname()==null || person.getEmail()==null){
+			person=null;
+			return new ResponseEntity<Person>(person, HttpStatus.BAD_REQUEST);
+		}
 		
-		return null;
+		if(address!=null)
+			person.setAddress(address);
+		
+		if(organization!=null){
+			organization = organizationService.read(organization.getOrganization_id());
+			if(organization==null){
+				person=null;
+				return new ResponseEntity<Person>(person, HttpStatus.BAD_REQUEST);
+			}else
+				person.setOrg(organization);
+		}
+		
+		person = personService.update(person);
+		if(person==null)
+			return new ResponseEntity<Person>(person, HttpStatus.NOT_FOUND);
+
+		return new ResponseEntity<Person>(person, HttpStatus.OK);		
 	}
+	
+	/**
+	 DELETE request to delete an specific person by id
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public ResponseEntity<Person> deletePerson(@PathVariable long id){
+		
+		Person person = personService.delete(id);
+		if(person==null)
+			return new ResponseEntity<Person>(person, HttpStatus.NOT_FOUND);
+		else
+			return new ResponseEntity<Person>(person, HttpStatus.OK);
+	}
+
 }

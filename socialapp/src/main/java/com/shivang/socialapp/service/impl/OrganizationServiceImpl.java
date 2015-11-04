@@ -15,7 +15,7 @@ public class OrganizationServiceImpl implements OrganizationService{
 
 	@Override
 	public Organization create(Organization organization) {
-		return organization;
+		return organizationDAO.create(organization);
 	}
 
 	@Override
@@ -25,15 +25,16 @@ public class OrganizationServiceImpl implements OrganizationService{
 
 	@Override
 	public Organization update(Organization organization) {
-		// TODO Auto-generated method stub
-		return null;
+		return organizationDAO.update(organization);
 	}
 
 	@Override
-	public Organization delete(Organization organization) {
-		// TODO Auto-generated method stub
-		return null;
+	public Organization delete(long id) {
+		
+		Organization organization = organizationDAO.read(id);
+		if(organization==null)
+			return null;
+		return organizationDAO.delete(organization);	
 	}
-	
-	
+		
 }

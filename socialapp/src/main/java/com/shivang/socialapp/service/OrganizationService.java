@@ -23,5 +23,6 @@ public interface OrganizationService {
 	/**
 	 * delete the organization
 	 */
-	public Organization delete(Organization organization);
+	public Organization delete(long id);
+
 }
