@@ -6,9 +6,11 @@ import java.util.List;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,12 +20,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 @Entity
 @Table(name="Person", uniqueConstraints = { @UniqueConstraint(columnNames = {
         "email"}) })
+@XmlRootElement(name="person")
 public class Person implements Serializable{
 	
 	/**
@@ -63,16 +68,16 @@ public class Person implements Serializable{
     @JoinColumn(name="org_id")
     private Organization org;
     
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "Friendship", 
         joinColumns = @JoinColumn(name = "user_id"), 
         inverseJoinColumns = @JoinColumn(name = "friend_id"))
     private List<Person> friends = new ArrayList<Person>();
     
-    @ManyToMany(mappedBy="friends")
-    private List<Person> befriended = new ArrayList<Person>();
-    
-    public Person(){}
+/*    @ManyToMany(mappedBy="friends")
+    private List<Person> befriended= new ArrayList<Person>();	*/
+
+	public Person(){}
     
     public Person(String firstname, String lastname, String email){
     	this.firstname = firstname;
@@ -128,6 +133,21 @@ public class Person implements Serializable{
 	public void setFriends(List<Person> friends) {
 		this.friends = friends;
 	}
+/*
+	*//**
+	 * @return the befriended
+	 *//*
+	public List<Person> getBefriended() {
+		return befriended;
+	}
+
+	*//**
+	 * @param befriended the befriended to set
+	 *//*
+	public void setBefriended(List<Person> befriended) {
+		this.befriended = befriended;
+	}
+*/	
 	@Override
 	public String toString(){
 		 return new StringBuffer("{firstname : ").append(this.firstname).append(", lastname : ").append(this.lastname).append(", email : ").append(this.email).append(", description : ").append(this.description).append(", address : ").append(this.address.toString()).append(", org : ").append(this.org.toString()).append("}").toString();

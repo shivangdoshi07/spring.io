@@ -2,6 +2,7 @@ package com.shivang.socialapp.dao;
 
 import java.util.List;
 
+import com.shivang.socialapp.model.Organization;
 import com.shivang.socialapp.model.Person;
 
 public interface PersonDAO {
@@ -33,4 +34,7 @@ public interface PersonDAO {
      * @return
      */
     public Person delete(Person person);
+    
+    public Person checkPersonInOrganization(Organization org);
+    
 }

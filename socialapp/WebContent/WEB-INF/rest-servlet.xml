@@ -15,12 +15,29 @@
 		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
 		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<context:annotation-config />
 	<context:component-scan base-package="com.shivang.socialapp" />
-	<mvc:annotation-driven />
+	
+	<!-- Simple strategy: only path extension is taken into account -->
+	<bean id="cnManager"
+		class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		<property name="favorPathExtension" value="true"/>
+		<property name="favorParameter" value="true" />
+		<property name="ignoreAcceptHeader" value="true" />
+		<property name="defaultContentType" value="application/json" />
+		<property name="useJaf" value="false"/>
+		<property name="mediaTypes">
+			<map>
+				<entry key="html" value="Text/html" />
+				<entry key="json" value="application/json" />
+				<entry key="xml" value="application/xml" />
+			</map>
+		</property>
+	</bean>
+	<mvc:annotation-driven content-negotiation-manager="cnManager"/>
 	
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
@@ -62,6 +79,5 @@
 	
 	<bean id="personDAOImpl" class="com.shivang.socialapp.dao.impl.PersonDAOImpl"/>
 	<bean id="organizationDAOImpl" class="com.shivang.socialapp.dao.impl.OrganizationDAOImpl"/>
-	<bean id="friendshipDAOImpl" class="com.shivang.socialapp.dao.impl.FriendshipDAOImpl"/>
 	
 </beans>

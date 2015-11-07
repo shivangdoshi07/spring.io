@@ -3,6 +3,7 @@ package com.shivang.socialapp.dao.impl;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.shivang.socialapp.dao.PersonDAO;
+import com.shivang.socialapp.model.Organization;
 import com.shivang.socialapp.model.Person;
 
 @Repository
@@ -60,6 +62,7 @@ public class PersonDAOImpl implements PersonDAO {
 			tx.commit();
 		} catch(HibernateException h){
 			tx.rollback();
+			person = null;
 		} finally{
 			session.close();
 		}
@@ -72,6 +75,34 @@ public class PersonDAOImpl implements PersonDAO {
 		Transaction tx =  session.beginTransaction();
 		try{
 			session.delete(person);
+			tx.commit();
+		} catch(HibernateException h){
+			tx.rollback();
+			person = null;
+		} finally{
+			session.close();
+		}
+		return person;
+	}
+
+	@Override
+	public Person checkPersonInOrganization(Organization org) {
+		Session session = sessionFactory.openSession();
+		Transaction tx =  session.beginTransaction();
+		
+		List<Person> persons;
+		Person person=null;
+
+		try{
+			String hql = "FROM com.shivang.socialapp.model.Person as person WHERE person.org = :org";
+			Query query = session.createQuery(hql);
+			query.setEntity("org", org);
+			query.setMaxResults(1);
+			
+			persons = query.list();
+			
+			if(persons.size()!=0)
+				person = persons.get(0);			
 			tx.commit();
 		} catch(HibernateException h){
 			tx.rollback();

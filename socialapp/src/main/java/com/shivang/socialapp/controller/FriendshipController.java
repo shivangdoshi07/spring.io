@@ -1,27 +1,45 @@
 package com.shivang.socialapp.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.shivang.socialapp.model.Person;
+import com.shivang.socialapp.service.FriendshipService;
+import com.shivang.socialapp.service.PersonService;
+
 @Controller
 @RequestMapping("/friends/{id1}/{id2}")
 public class FriendshipController {
 
-	@RequestMapping(method = RequestMethod.POST)
+	@Autowired
+	FriendshipService friendshipService;
+	
+	@RequestMapping(method = RequestMethod.PUT)
 	@ResponseBody
-	public String addFriend(@PathVariable long id1, @PathVariable long id2){
+	public ResponseEntity<String> addFriend(@PathVariable long id1, @PathVariable long id2){
 		
-		return null;
+		Person person = friendshipService.create(id1, id2);
+		if(person==null)
+			return new ResponseEntity<String>("", HttpStatus.NOT_FOUND);
+		else
+			return new ResponseEntity<String>("Success, Person with id's "+id1+" and "+id2+" are friends.", HttpStatus.OK);		
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
 	@ResponseBody
-	public String removeFriend(@PathVariable long id1, @PathVariable long id2){
+	public ResponseEntity<String> removeFriend(@PathVariable long id1, @PathVariable long id2){
 		
-		return null;
+		Person person = friendshipService.delete(id1, id2);
+		if(person==null)
+			return new ResponseEntity<String>("", HttpStatus.NOT_FOUND);
+		else
+			return new ResponseEntity<String>("Success, Person with id's "+id1+"and "+id2+" are no more friends.", HttpStatus.OK);
 	}
 
 }

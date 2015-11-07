@@ -2,12 +2,14 @@ package com.shivang.socialapp.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.shivang.socialapp.dao.PersonDAO;
 import com.shivang.socialapp.model.Person;
 import com.shivang.socialapp.service.PersonService;
 
 @Service
+@Transactional
 public class PersonServiceImpl implements PersonService {
 
 	@Autowired

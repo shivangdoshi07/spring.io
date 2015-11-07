@@ -1,5 +1,6 @@
 package com.shivang.socialapp.controller;
 
+import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shivang.socialapp.model.Address;
@@ -48,7 +50,7 @@ public class OrganizationController {
 	 * @return
 	 */
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public ResponseEntity<Organization> getOrganization(@PathVariable long id){
+	public ResponseEntity<Organization> getOrganization(@PathVariable long id, @RequestParam(required=false) String format){
 		
 		Organization org = organizationService.read(id);
 		if(org==null)
@@ -67,9 +69,7 @@ public class OrganizationController {
 	@RequestMapping(value = "{id}", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Organization> updateOrganization(@PathVariable long id, @ModelAttribute Organization org, @ModelAttribute Address address){
-		
-		org.setOrganization_id(id);
-		
+				
 		if(org.getName()==null){
 			org=null;
 			return new ResponseEntity<Organization>(org, HttpStatus.BAD_REQUEST);
@@ -77,6 +77,8 @@ public class OrganizationController {
 		
 		if(address!=null)
 			org.setAddress(address);
+
+		org.setOrganization_id(id);
 		
 		org = organizationService.update(org);
 		if(org==null)
@@ -94,7 +96,12 @@ public class OrganizationController {
 	@ResponseBody
 	public ResponseEntity<Organization> deleteOrganization(@PathVariable long id){
 		
-		Organization org = organizationService.delete(id);
+		Organization org = null;
+		try{
+			org = organizationService.delete(id);
+		} catch(HibernateException he){
+			return new ResponseEntity<Organization>(org, HttpStatus.BAD_REQUEST);
+		}
 		if(org==null)
 			return new ResponseEntity<Organization>(org, HttpStatus.NOT_FOUND);
 		else

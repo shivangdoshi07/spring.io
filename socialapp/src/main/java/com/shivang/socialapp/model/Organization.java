@@ -8,11 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 @Entity
 @Table(name="Organization")
+@XmlRootElement(name="organization")
 public class Organization {
 	
 	@Id

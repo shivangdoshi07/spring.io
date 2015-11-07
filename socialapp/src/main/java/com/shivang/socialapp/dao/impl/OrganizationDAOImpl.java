@@ -57,6 +57,7 @@ public class OrganizationDAOImpl implements OrganizationDAO {
 			tx.commit();
 		} catch(HibernateException h) {
 			tx.rollback();
+			org = null;
 		} finally {
 			session.close();
 		}
@@ -72,6 +73,7 @@ public class OrganizationDAOImpl implements OrganizationDAO {
 			tx.commit();
 		} catch(HibernateException h) {
 			tx.rollback();
+			org = null;
 		} finally {
 			session.close();
 		}

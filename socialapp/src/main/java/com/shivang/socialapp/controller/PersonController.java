@@ -1,7 +1,9 @@
 package com.shivang.socialapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -68,12 +70,18 @@ public class PersonController {
 	@RequestMapping(value="{id}", method=RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<Person> getPerson(@PathVariable("id") long id, @RequestParam(required=false) String format){
-		
 		Person person = personService.read(id);
 		if(person==null)
 			return new ResponseEntity<Person>(person, HttpStatus.NOT_FOUND);
-		else
-			return new ResponseEntity<Person>(person, HttpStatus.OK);
+		
+		/*final HttpHeaders responseHeaders = new HttpHeaders();
+		
+		if(format.equalsIgnoreCase("xml"))
+			responseHeaders.setContentType(MediaType.APPLICATION_XML);
+		else if(format.equalsIgnoreCase("json"))
+			responseHeaders.setContentType(MediaType.APPLICATION_JSON);*/
+
+		return new ResponseEntity<Person>(person, HttpStatus.OK);
 	}
 	
 	/**
@@ -88,12 +96,12 @@ public class PersonController {
 	@ResponseBody
 	public ResponseEntity<Person> updatePerson(@PathVariable long id, @ModelAttribute Person person, @ModelAttribute Address address, @ModelAttribute Organization organization){
 
-		person.setId(id);
-
 		if(person.getFirstname()==null || person.getLastname()==null || person.getEmail()==null){
 			person=null;
 			return new ResponseEntity<Person>(person, HttpStatus.BAD_REQUEST);
 		}
+		
+		person.setId(id);
 		
 		if(address!=null)
 			person.setAddress(address);
