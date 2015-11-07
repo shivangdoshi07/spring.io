@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +46,7 @@ public class OrganizationController {
     }
 	
 	/**
+	 RESTful Method
 	 * get an existing organization
 	 * @param id
 	 * @return
@@ -58,6 +60,24 @@ public class OrganizationController {
 		else
 			return new ResponseEntity<Organization>(org, HttpStatus.OK);
 	}
+	
+	/**
+	 * View Method
+ 	 * get an existing organization
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="{id}", method=RequestMethod.GET, produces={"text/html"})
+	public String getOrganizationWithView(@PathVariable("id") long id, Model model){
+		
+		Organization org = organizationService.read(id);
+		if(org==null)
+			return new String("Couldn't find requested view with Error "+HttpStatus.NOT_FOUND);
+		
+		model.addAttribute("org",org);
+		return "org";
+	}	
 	
 	/**
 	 Update an existing organization

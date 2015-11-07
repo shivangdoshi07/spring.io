@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,11 +64,12 @@ public class PersonController {
     }
 	
 	/**
+	 * RESTful method
 	 GET request to get a specific person by id
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value="{id}", method=RequestMethod.GET)
+	@RequestMapping(value="{id}", method=RequestMethod.GET, produces={"application/xml", "application/json"})
 	@ResponseBody
 	public ResponseEntity<Person> getPerson(@PathVariable("id") long id, @RequestParam(required=false) String format){
 		Person person = personService.read(id);
@@ -82,6 +84,23 @@ public class PersonController {
 			responseHeaders.setContentType(MediaType.APPLICATION_JSON);*/
 
 		return new ResponseEntity<Person>(person, HttpStatus.OK);
+	}
+	
+	/**
+	 * View method
+	 GET request to get a specific person by id
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="{id}", method=RequestMethod.GET, produces={"text/html"})
+	public String getPersonWithView(@PathVariable("id") long id, Model model){
+		Person person = personService.read(id);
+		if(person==null)
+			return new String("Couldn't find requested view with Error "+HttpStatus.NOT_FOUND);
+		
+		model.addAttribute(person);
+		return "person";
 	}
 	
 	/**
