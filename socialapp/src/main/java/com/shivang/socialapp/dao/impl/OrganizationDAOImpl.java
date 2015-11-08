@@ -17,6 +17,9 @@ public class OrganizationDAOImpl implements OrganizationDAO {
 	@Autowired
     SessionFactory sessionFactory;
 
+	/**
+	 * DAO implementation of creating an Organization
+	 */
 	@Override
 	public Organization create(Organization org) {
 		Session session = sessionFactory.openSession();
@@ -32,6 +35,9 @@ public class OrganizationDAOImpl implements OrganizationDAO {
 		return org;
 	}
 
+	/**
+	 * DAO implementation of get/reading an Organization
+	 */
 	@Override
 	public Organization read(long id) {
 		Session session = sessionFactory.openSession();
@@ -48,6 +54,9 @@ public class OrganizationDAOImpl implements OrganizationDAO {
 		return organization;
 	}
 
+	/**
+	 * DAO implementation of updating an Organization
+	 */
 	@Override
 	public Organization update(Organization org) {
 		Session session = sessionFactory.openSession();
@@ -64,6 +73,9 @@ public class OrganizationDAOImpl implements OrganizationDAO {
 		return org;
 	}
 
+	/**
+	 * DAO implementation of deleting/removing an Organization
+	 */
 	@Override
 	public Organization delete(Organization org) {
 		Session session = sessionFactory.openSession();

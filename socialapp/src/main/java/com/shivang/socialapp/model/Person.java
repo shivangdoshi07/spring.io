@@ -18,11 +18,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
+
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 @Entity
@@ -73,10 +76,10 @@ public class Person implements Serializable{
         joinColumns = @JoinColumn(name = "user_id"), 
         inverseJoinColumns = @JoinColumn(name = "friend_id"))
     private List<Person> friends = new ArrayList<Person>();
-    
-/*    @ManyToMany(mappedBy="friends")
-    private List<Person> befriended= new ArrayList<Person>();	*/
-
+ /*      
+    @ManyToMany(fetch = FetchType.EAGER,mappedBy="friends")
+    private List<Person> befriended= new ArrayList<Person>();
+*/
 	public Person(){}
     
     public Person(String firstname, String lastname, String email){

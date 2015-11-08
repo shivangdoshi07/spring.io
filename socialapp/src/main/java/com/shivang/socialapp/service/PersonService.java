@@ -5,8 +5,7 @@ import com.shivang.socialapp.model.Person;
 public interface PersonService {
 
 	/**
-	 * create a new person entry
-	 * @return 
+	 * create a new person entry 
 	 */
 	public Person create(Person person);
 	

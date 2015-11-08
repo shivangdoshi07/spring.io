@@ -1,7 +1,5 @@
 package com.shivang.socialapp.service;
 
-import java.util.List;
-
 import com.shivang.socialapp.model.Person;
 
 public interface FriendshipService {

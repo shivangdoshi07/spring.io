@@ -20,6 +20,9 @@ public class PersonDAOImpl implements PersonDAO {
 	@Autowired
     SessionFactory sessionFactory;
 
+	/**
+	 * DAO implementation of creating a Person
+	 */
 	@Override
 	public Person create(Person person) {
 		
@@ -36,6 +39,9 @@ public class PersonDAOImpl implements PersonDAO {
 		return person;
 	}
 
+	/**
+	 * DAO implementation of get/reading a Person
+	 */
 	@Override
 	public Person read(long id) {
 		
@@ -53,6 +59,9 @@ public class PersonDAOImpl implements PersonDAO {
 		return person;
 	}
 
+	/**
+	 * DAO implementation of updating a Person
+	 */
 	@Override
 	public Person update(Person person) {
 		Session session = sessionFactory.openSession();
@@ -69,6 +78,9 @@ public class PersonDAOImpl implements PersonDAO {
 		return person;
 	}
 
+	/**
+	 * DAO implementation of deleting/removing a Person
+	 */
 	@Override
 	public Person delete(Person person) {
 		Session session = sessionFactory.openSession();
@@ -85,6 +97,9 @@ public class PersonDAOImpl implements PersonDAO {
 		return person;
 	}
 
+	/**
+	 * DAO implementation to check if any Person belongs to the given Organization before deleting that Organization
+	 */
 	@Override
 	public Person checkPersonInOrganization(Organization org) {
 		Session session = sessionFactory.openSession();

@@ -1,7 +1,6 @@
 package com.shivang.socialapp.service.impl;
 
 import java.util.Iterator;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +16,9 @@ public class FriendshipServiceImpl implements FriendshipService {
 	@Autowired
 	PersonDAO personDAO;
 	
+	/**
+	 * Service implementation to record an Friendship between two Persons
+	 */
 	@Override
 	public Person create(long id1, long id2) {
 		
@@ -55,6 +57,9 @@ public class FriendshipServiceImpl implements FriendshipService {
 		}
 	}
 
+	/**
+	 * Service implementation to remove Friendship between two Persons
+	 */
 	@Override
 	public Person delete(long id1, long id2) {
 		Person person1 = personDAO.read(id1);	

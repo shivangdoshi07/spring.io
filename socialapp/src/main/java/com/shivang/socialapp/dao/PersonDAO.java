@@ -1,7 +1,5 @@
 package com.shivang.socialapp.dao;
 
-import java.util.List;
-
 import com.shivang.socialapp.model.Organization;
 import com.shivang.socialapp.model.Person;
 

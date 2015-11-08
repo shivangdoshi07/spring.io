@@ -1,9 +1,7 @@
 package com.shivang.socialapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -75,13 +73,6 @@ public class PersonController {
 		Person person = personService.read(id);
 		if(person==null)
 			return new ResponseEntity<Person>(person, HttpStatus.NOT_FOUND);
-		
-		/*final HttpHeaders responseHeaders = new HttpHeaders();
-		
-		if(format.equalsIgnoreCase("xml"))
-			responseHeaders.setContentType(MediaType.APPLICATION_XML);
-		else if(format.equalsIgnoreCase("json"))
-			responseHeaders.setContentType(MediaType.APPLICATION_JSON);*/
 
 		return new ResponseEntity<Person>(person, HttpStatus.OK);
 	}

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shivang.socialapp.model.Person;
 import com.shivang.socialapp.service.FriendshipService;
-import com.shivang.socialapp.service.PersonService;
 
 @Controller
 @RequestMapping("/friends/{id1}/{id2}")
@@ -20,6 +19,12 @@ public class FriendshipController {
 	@Autowired
 	FriendshipService friendshipService;
 	
+	/**
+	 * Record friendship of Person with two given id's if they exist
+	 * @param id1
+	 * @param id2
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.PUT)
 	@ResponseBody
 	public ResponseEntity<String> addFriend(@PathVariable long id1, @PathVariable long id2){
@@ -31,6 +36,12 @@ public class FriendshipController {
 			return new ResponseEntity<String>("Success, Person with id's "+id1+" and "+id2+" are friends.", HttpStatus.OK);		
 	}
 	
+	/**
+	 * Delete/Remove a friendship between 2 persons if they are friends
+	 * @param id1
+	 * @param id2
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.DELETE)
 	@ResponseBody
 	public ResponseEntity<String> removeFriend(@PathVariable long id1, @PathVariable long id2){

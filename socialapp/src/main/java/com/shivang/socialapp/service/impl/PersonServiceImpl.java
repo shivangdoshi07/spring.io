@@ -16,7 +16,7 @@ public class PersonServiceImpl implements PersonService {
 	PersonDAO personDAO;
 	
 	/**
-	 * 
+	 * Service implementation of creating a Person
 	 * @param person
 	 * @return
 	 */
@@ -25,7 +25,7 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	/**
-	 * 
+	 * Service implementation of get/reading a Person
 	 * @param id
 	 * @return
 	 */
@@ -34,7 +34,7 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	/**
-	 * 
+	 * Service implementation of updating a Person
 	 * @param person
 	 * @return
 	 */
@@ -43,7 +43,7 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	/**
-	 * 
+	 * Service implementation of deleting/removing a Person
 	 * @param id
 	 * @return
 	 */
