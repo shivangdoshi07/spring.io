@@ -39,6 +39,9 @@ public class PersonServiceImpl implements PersonService {
 	 * @return
 	 */
 	public Person update(Person person) {
+		
+		Person p = personDAO.read(person.getId());
+		person.setFriends(p.getFriends());
 		return personDAO.update(person);
 	}
 

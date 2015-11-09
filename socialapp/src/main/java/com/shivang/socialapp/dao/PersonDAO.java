@@ -33,6 +33,11 @@ public interface PersonDAO {
      */
     public Person delete(Person person);
     
+    /**
+     * To check if any Person belongs to the Organization
+     * @param org
+     * @return
+     */
     public Person checkPersonInOrganization(Organization org);
-    
+
 }

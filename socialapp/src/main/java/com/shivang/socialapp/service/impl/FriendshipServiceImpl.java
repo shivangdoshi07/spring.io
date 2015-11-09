@@ -53,6 +53,8 @@ public class FriendshipServiceImpl implements FriendshipService {
 			return person1;
 		else{
 			person1.getFriends().add(person2);
+			person2.getFriends().add(person1);
+			personDAO.update(person2);
 			return personDAO.update(person1);
 		}
 	}
@@ -81,7 +83,7 @@ public class FriendshipServiceImpl implements FriendshipService {
 		}
 		Person person = person1;
 		
-		if(!count){			
+		if(count){			
 			iterator = person2.getFriends().iterator();
 			
 			while(iterator.hasNext()){
@@ -98,6 +100,7 @@ public class FriendshipServiceImpl implements FriendshipService {
 		if(!count)
 			return null;
 		
-		return personDAO.update(person);
+		personDAO.update(person2);
+		return personDAO.update(person1);
 	}
 }
