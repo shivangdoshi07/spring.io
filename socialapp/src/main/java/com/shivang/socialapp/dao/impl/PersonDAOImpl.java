@@ -23,9 +23,8 @@ public class PersonDAOImpl implements PersonDAO {
 	/**
 	 * DAO implementation of creating a Person
 	 */
-	@Override
 	public Person create(Person person) {
-		
+
 		Session session = sessionFactory.openSession();
 		Transaction tx =  session.beginTransaction();
 		try{
@@ -40,11 +39,9 @@ public class PersonDAOImpl implements PersonDAO {
 	}
 
 	/**
-	 * DAO implementation of get/reading a Person
+	 *  DAO implementation of get/reading a Person 
 	 */
-	@Override
 	public Person read(long id) {
-		
 		Session session = sessionFactory.openSession();
 		Transaction tx =  session.beginTransaction();
 		Person person = null;
@@ -62,7 +59,6 @@ public class PersonDAOImpl implements PersonDAO {
 	/**
 	 * DAO implementation of updating a Person
 	 */
-	@Override
 	public Person update(Person person) {
 		Session session = sessionFactory.openSession();
 		Transaction tx =  session.beginTransaction();
@@ -81,7 +77,6 @@ public class PersonDAOImpl implements PersonDAO {
 	/**
 	 * DAO implementation of deleting/removing a Person
 	 */
-	@Override
 	public Person delete(Person person) {
 		Session session = sessionFactory.openSession();
 		Transaction tx =  session.beginTransaction();
@@ -98,9 +93,8 @@ public class PersonDAOImpl implements PersonDAO {
 	}
 
 	/**
-	 * DAO implementation to check if any Person belongs to the given Organization before deleting that Organization
+	 * * DAO implementation to check if any Person belongs to the given Organization before deleting that Organization
 	 */
-	@Override
 	public Person checkPersonInOrganization(Organization org) {
 		Session session = sessionFactory.openSession();
 		Transaction tx =  session.beginTransaction();
@@ -125,6 +119,27 @@ public class PersonDAOImpl implements PersonDAO {
 			session.close();
 		}
 		return person;
+	}
+
+	/**
+	 * Remove all friendship when a person is deleted
+	 */
+	public void removeAllFriendship(Person person) {
+		Session session = sessionFactory.openSession();
+		Transaction tx =  session.beginTransaction();
+		
+		try{
+			String sql = "DELETE FROM friendship WHERE friend_id = :friend_id";
+			Query query = session.createSQLQuery(sql);
+			query.setParameter("friend_id", person.getId());
+			
+			query.executeUpdate();			
+			tx.commit();
+		} catch(HibernateException h){
+			tx.rollback();
+		} finally{
+			session.close();
+		}	
 	}
 
 }

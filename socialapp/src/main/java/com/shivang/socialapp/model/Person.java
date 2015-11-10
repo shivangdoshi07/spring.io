@@ -1,12 +1,10 @@
 package com.shivang.socialapp.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -18,13 +16,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
-import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
@@ -33,13 +30,8 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 @Table(name="Person", uniqueConstraints = { @UniqueConstraint(columnNames = {
         "email"}) })
 @XmlRootElement(name="person")
-public class Person implements Serializable{
+public class Person{
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	@Id
     @Column(name="id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -69,24 +61,19 @@ public class Person implements Serializable{
 	private Address address;
     
     @ManyToOne
+    @NotFound(action=NotFoundAction.IGNORE)
     @JoinColumn(name="org_id")
     private Organization org;
     
     @JsonIgnoreProperties({"description","org","friends"})
     @ManyToMany(fetch = FetchType.EAGER)
+    @NotFound(action=NotFoundAction.IGNORE)
     @JoinTable(name = "Friendship", 
         joinColumns = @JoinColumn(name = "user_id"), 
         inverseJoinColumns = @JoinColumn(name = "friend_id"))
     private List<Person> friends = new ArrayList<Person>();
 
-    public Person(){}
-    
-    public Person(String firstname, String lastname, String email){
-    	this.firstname = firstname;
-    	this.lastname = lastname;
-    	this.email = email;
-    }
-    
+   
 	public long getId() {
 		return id;
 	}

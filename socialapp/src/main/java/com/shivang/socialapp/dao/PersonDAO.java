@@ -39,5 +39,11 @@ public interface PersonDAO {
      * @return
      */
     public Person checkPersonInOrganization(Organization org);
-
+    
+    /**
+     * To remove friendship when a person is deleted/removed
+     * @param person
+     */
+    public void removeAllFriendship(Person person);
+    
 }

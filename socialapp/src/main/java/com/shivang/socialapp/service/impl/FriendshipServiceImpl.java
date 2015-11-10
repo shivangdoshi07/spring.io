@@ -19,7 +19,6 @@ public class FriendshipServiceImpl implements FriendshipService {
 	/**
 	 * Service implementation to record an Friendship between two Persons
 	 */
-	@Override
 	public Person create(long id1, long id2) {
 		
 		Person person1 = personDAO.read(id1);	
@@ -62,7 +61,6 @@ public class FriendshipServiceImpl implements FriendshipService {
 	/**
 	 * Service implementation to remove Friendship between two Persons
 	 */
-	@Override
 	public Person delete(long id1, long id2) {
 		Person person1 = personDAO.read(id1);	
 		Person person2 = personDAO.read(id2);

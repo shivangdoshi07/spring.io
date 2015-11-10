@@ -21,35 +21,30 @@ public class OrganizationServiceImpl implements OrganizationService{
 	OrganizationDAO organizationDAO;
 
 	/**
-	 * Service implementation of creating an Organization
+	 * Service Implementation of creating an Organization
 	 */
-	@Override
 	public Organization create(Organization organization) {
 		return organizationDAO.create(organization);
 	}
-
+	
 	/**
-	 * Service implementation of get/reading an Organization
+	 *  Service Implementation of reading/get an Organization
 	 */
-	@Override
 	public Organization read(long id) {
 		return organizationDAO.read(id);
 	}
 
 	/**
-	 * Service implementation of updating an Organization
+	 *  Service Implementation of updating an Organization
 	 */
-	@Override
 	public Organization update(Organization organization) {
 		return organizationDAO.update(organization);
 	}
 
 	/**
-	 * Service implementation of removing/deleting an Organization
+	 *  Service Implementation of deleting an Organization
 	 */
-	@Override
 	public Organization delete(long id) {
-		
 		Organization organization = organizationDAO.read(id);
 		if(organization==null)
 			return null;
